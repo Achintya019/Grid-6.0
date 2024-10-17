@@ -3,6 +3,7 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
 from tensorflow.keras.optimizers import Adam
+import cv2
 
 #CNN model
 model = Sequential([
@@ -47,3 +48,11 @@ image_path = 'Grid-6.0/mango.jpeg'
 
 label, confidence = predict_image(image_path)
 print(f'Prediction: {label}, Freshness : {confidence} %')
+
+img = cv2.imread(image_path)
+cv2.putText(img, f"Freshness : {confidence} %", (0, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 255), 2)
+cv2.putText(img, label, (0, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
+cv2.imshow('Object Freshness',img)
+
+cv2.waitKey(0)
+cv2.destroyAllWindows()
