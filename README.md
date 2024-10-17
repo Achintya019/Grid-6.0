@@ -57,3 +57,10 @@ Fruits_Vegetables_Dataset/     # Root directory
 ![image1](https://github.com/user-attachments/assets/b56c662b-709a-4440-9659-3950432a5fea)
 ![image2](https://github.com/user-attachments/assets/2faca2ae-0b59-46ca-bc36-7f20865be19f)
 
+
+# Authors and Contributers
+•  [Achintya Agarwal](https://www.linkedin.com/in/achintya-agarwal-bab26a21b/)
+
+•  [Aryam Juneja](https://www.linkedin.com/in/aryam-juneja/)
+
+•  [Pratham](https://www.linkedin.com/in/pratham-sharma-771397227/)
