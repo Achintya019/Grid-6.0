@@ -39,6 +39,8 @@ EXPIRY DATE DETECTION DATASET/        # Root directory for the dataset
 ```
 ## Inference
 ![image](https://github.com/user-attachments/assets/349c4c10-4bb4-4f71-a76c-1466c7ba061e)
+![image](https://github.com/user-attachments/assets/f8919c09-7fef-4baa-b568-14a00f2474b7)
+
 
 
 # Fruits and Veggies Freshness Dataset Structure
