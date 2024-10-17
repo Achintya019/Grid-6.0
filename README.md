@@ -38,6 +38,8 @@ EXPIRY DATE DETECTION DATASET/        # Root directory for the dataset
 └── Data.yaml                   # Yaml file for the dataset
 ```
 ## Inference
+![image](https://github.com/user-attachments/assets/349c4c10-4bb4-4f71-a76c-1466c7ba061e)
+
 
 # Fruits and Veggies Freshness Dataset Structure
 
