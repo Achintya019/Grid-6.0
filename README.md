@@ -15,9 +15,8 @@ BRAND DETECTION DATASET/        # Root directory for the dataset
 │   │       └── label/          # Folder for corresponding labels
 └── Data.yaml                   # Yaml file for the dataset
 ```
+![image](https://github.com/user-attachments/assets/84917543-98c3-4248-a8de-40970772d513)
 ![image](https://github.com/user-attachments/assets/949a8235-898c-45e2-a637-c86a23395958)
-![image](https://github.com/user-attachments/assets/ad5d7da0-a75f-4989-8896-263234b53c17)
-
 
 
 ## Expiry Date Detection Dataset Structure
