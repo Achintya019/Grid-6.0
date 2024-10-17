@@ -32,16 +32,20 @@ while cap.isOpened():
             
             # Crop the detected region
             cropped_image = frame[y1:y2, x1:x2]
+
+            
+            emptystring=""
             
             # Use EasyOCR to extract text from the cropped image
             text_results = reader.readtext(cropped_image)
             for text in text_results:
                 print("Expiry Date is:",text[1])
+                emptystring= emptystring + " " + text[1]
             
             # Display the extracted text on the frame
             for (bbox, text, _) in text_results:
-                cv2.putText(frame, text, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
-            
+                cv2.putText(frame, emptystring, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+               
 
     # Display the frame with bounding boxes and text
     cv2.imshow('Video Inference',frame)
