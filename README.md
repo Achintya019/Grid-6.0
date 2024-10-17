@@ -1,4 +1,4 @@
-## Brand Identifier Dataset Structure
+# Brand Identifier Dataset Structure
 * Download the training and validation dataset from [Google Drive Link](https://drive.google.com/file/d/1W94lbECBmAwtbmiAmRm9vaEMjEmtmIIc/view?usp=sharing)
 ```
 BRAND DETECTION DATASET/        # Root directory for the dataset
@@ -15,11 +15,12 @@ BRAND DETECTION DATASET/        # Root directory for the dataset
 │   │       └── label/          # Folder for corresponding labels
 └── Data.yaml                   # Yaml file for the dataset
 ```
+## Inference
 ![image](https://github.com/user-attachments/assets/84917543-98c3-4248-a8de-40970772d513)
 ![image](https://github.com/user-attachments/assets/949a8235-898c-45e2-a637-c86a23395958)
 
 
-## Expiry Date Detection Dataset Structure
+# Expiry Date Detection Dataset Structure
 * Download the training and validation dataset from [Google Drive Link](https://drive.google.com/file/d/1KBuxtRL0T0_ZsMyiLJX0Xzlr8ijLmcGJ/view?usp=sharing)
 ```
 EXPIRY DATE DETECTION DATASET/        # Root directory for the dataset
@@ -36,8 +37,9 @@ EXPIRY DATE DETECTION DATASET/        # Root directory for the dataset
 │   │       └── label/          # Folder for corresponding labels
 └── Data.yaml                   # Yaml file for the dataset
 ```
+## Inference
 
-## Fruits and Veggies Freshness Dataset Structure
+# Fruits and Veggies Freshness Dataset Structure
 
 * Download the training and validation dataset from [Google Drive Link](https://drive.google.com/file/d/10368tEQz-8n165KKnOravn3IpcsPBDEM/view)
 ```
@@ -51,6 +53,7 @@ Fruits_Vegetables_Dataset/     # Root directory
 │   ├── image_002.jpg
 │   └── ...                    # More rotten images
 ```
+## Inference
 ![image1](https://github.com/user-attachments/assets/b56c662b-709a-4440-9659-3950432a5fea)
 ![image2](https://github.com/user-attachments/assets/2faca2ae-0b59-46ca-bc36-7f20865be19f)
 
