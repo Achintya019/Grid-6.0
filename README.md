@@ -37,7 +37,7 @@ EXPIRY DATE DETECTION DATASET/        # Root directory for the dataset
 
 ## Fruits and Veggies Freshness Dataset Structure
 
-* Download the training and validation dataset from [Google Drive Link]()
+* Download the training and validation dataset from [Google Drive Link](https://drive.google.com/file/d/10368tEQz-8n165KKnOravn3IpcsPBDEM/view)
 ```
 Fruits_Vegetables_Dataset/     # Root directory
 ├── Fresh/                     # Subfolder containing fresh fruits and vegetables images
