@@ -108,7 +108,7 @@ def apply_custom_css():
 @st.cache_resource
 def load_model():
     try:
-        model = tf.keras.models.load_model('/home/aryam/Projects/Grid-6.0/fruit_veg_classifier_custom.keras')  # Update file path to .keras format
+        model = tf.keras.models.load_model('/home/aryam/Projects/Grid-6.0/Freshness_Predicter/fruit_veg_classifier_custom.keras')  # Update file path to .keras format
         return model
     except Exception as e:
         st.error(f"Error loading model: {e}")
