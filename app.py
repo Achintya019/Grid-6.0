@@ -134,7 +134,7 @@ def predict_freshness(image_path, model):
 
     predicted_class_name = class_names[predicted_class_index]
     state = 'Fresh' if predicted_class_index < 9 else 'Rotten'
-    freshness_index = confidence_score * 100 if state == 'Fresh' else (1 - confidence_score) * 100
+    freshness_index = (50 + (confidence_score * 50)) if state == 'Fresh' else (1 - confidence_score) * 50
 
     return predicted_class_name, state, freshness_index
 
