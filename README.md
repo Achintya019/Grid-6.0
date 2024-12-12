@@ -43,19 +43,26 @@ EXPIRY DATE DETECTION DATASET/        # Root directory for the dataset
 
 
 
-# Fruits and Veggies Freshness Dataset Structure
-
-* Download the training and validation dataset from [Google Drive Link](https://drive.google.com/file/d/10368tEQz-8n165KKnOravn3IpcsPBDEM/view)
+* Download the training and validation dataset from [Google Drive Link](https://drive.google.com/drive/folders/1xEngKyROVF7RoKpfSpabhQ8wd76B9jhB?usp=drive_link)
 ```
 Fruits_Vegetables_Dataset/     # Root directory
-├── Fresh/                     # Subfolder containing fresh fruits and vegetables images
+├── train/                  # Subfolder containing fresh and rotten fruits, vegetables images
+│   ├── FreshApple
 │   ├── image_001.jpg
 │   ├── image_002.jpg
 │   └── ...                    # More fresh images
-├── Rotten/                    # Subfolder containing rotten fruits and vegetables images
+│   ├── RottenApple
 │   ├── image_001.jpg
 │   ├── image_002.jpg
-│   └── ...                    # More rotten images
+...                          # More classes containing images
+├── test/                    # Subfolder containing test images of fruits and vegetables 
+│   ├── FreshApple
+│   ├── image_001.jpg
+│   ├── image_002.jpg
+│   └── ...                   
+│   ├── RottenApple
+│   ├── image_001.jpg
+│   ├── image_002.jpg              
 ```
 ## Inference
 ![image1](https://github.com/user-attachments/assets/b56c662b-709a-4440-9659-3950432a5fea)
