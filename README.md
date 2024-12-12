@@ -1,3 +1,33 @@
+# Website UI
+![image](https://github.com/user-attachments/assets/d9a8363e-e285-4a0a-a2cc-830495a7d30d)
+
+## Users can choose a task they wish to perfom 
+![image](https://github.com/user-attachments/assets/d5425ab7-b937-4b67-83de-31634a56a901)
+
+
+## Users can choose upload a picture/video or capture an image with capture image feature
+![image](https://github.com/user-attachments/assets/1de9f9a0-0b78-4eb6-af23-5f8ca7a398d9)
+
+
+# Sample Interaction with the interface
+![Screenshot 2024-12-12 180725](https://github.com/user-attachments/assets/19adae73-57ee-4df0-b885-a5c71b7e4752)
+![image](https://github.com/user-attachments/assets/e3e742de-226b-4537-be48-0474e24c884c)
+
+
+## Database Entries 
+![image](https://github.com/user-attachments/assets/61a5bc2b-a1a3-4a3d-854f-f5dfba3bb830)
+
+### Schema
+            CREATE TABLE IF NOT EXISTS results 
+            (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            task_type TEXT,
+            result TEXT,
+            confidence REAL,
+            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+            )
+
+
 # Brand Identifier Dataset Structure
 * Download the training and validation dataset from [Google Drive Link](https://drive.google.com/file/d/11JR2Fvedr9-CtLX6JB_6t4a8S_HSsUfP/view?usp=drive_link)
 ```
