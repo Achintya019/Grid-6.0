@@ -1,5 +1,5 @@
 # Brand Identifier Dataset Structure
-* Download the training and validation dataset from [Google Drive Link](https://drive.google.com/file/d/1W94lbECBmAwtbmiAmRm9vaEMjEmtmIIc/view?usp=sharing)
+* Download the training and validation dataset from [Google Drive Link](https://drive.google.com/file/d/11JR2Fvedr9-CtLX6JB_6t4a8S_HSsUfP/view?usp=drive_link)
 ```
 BRAND DETECTION DATASET/        # Root directory for the dataset
 ├── BRAND_DETECTION/            # Main dataset folder
@@ -21,7 +21,7 @@ BRAND DETECTION DATASET/        # Root directory for the dataset
 
 
 # Expiry Date Detection Dataset Structure
-* Download the training and validation dataset from [Google Drive Link](https://drive.google.com/file/d/1KBuxtRL0T0_ZsMyiLJX0Xzlr8ijLmcGJ/view?usp=sharing)
+* Download the training and validation dataset from [Google Drive Link](https://drive.google.com/file/d/1pgiL1aY-hD70cq_Cum1_w3-JJ3xJX7fy/view?usp=drive_link)
 ```
 EXPIRY DATE DETECTION DATASET/        # Root directory for the dataset
 ├── EXPIRY_DATE/            # Main dataset folder
