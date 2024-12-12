@@ -114,7 +114,7 @@ def delete_db_entry(entry_id):
 # Load the TensorFlow model for freshness detection
 @st.cache_resource
 def load_freshness_model():
-    return tf.keras.models.load_model('/content/fruit_veg_classifier_custom.keras')
+    return tf.keras.models.load_model('Freshness_Predicter/fruit_veg_classifier_custom.keras')
 
 # Load the YOLO model for date extraction
 @st.cache_resource
@@ -287,14 +287,14 @@ if st.button('Process'):
         save_to_db('Freshness Detection', f"{predicted_class_name} ({state})", freshness_index)
 
     elif task_type == 'Date Extraction' and 'image_path' in locals():
-        model = load_yolo_model('/content/exp_date.pt')
+        model = load_yolo_model('Expiry_Date_Identifier/exp_date.pt')
         dates = extract_dates(image_path, model)
         st.subheader("Extracted Dates:")
         st.write(dates if dates else "No dates detected.")
         save_to_db('Date Extraction', dates)
 
     elif task_type == 'Brand Detection' and 'image_path' in locals():
-        model = load_yolo_model('/content/model.pt')
+        model = load_yolo_model('Brand_Identifier/model.pt')
         brands, annotated_image_path = detect_brands(image_path, model)
         st.subheader("Detected Brands:")
         st.write(', '.join(brands) if brands else "No brands detected.")
@@ -302,14 +302,14 @@ if st.button('Process'):
         save_to_db('Brand Detection', ', '.join(brands))
 
     elif task_type == 'Date Extraction' and 'video_path' in locals():
-        model = load_yolo_model('/content/exp_date.pt')
+        model = load_yolo_model('Expiry_Date_Identifier/exp_date.pt')
         dates = extract_dates_from_video(video_path, model)
         st.subheader("Extracted Dates from Video:")
         st.write(dates if dates else "No dates detected in video.")
         save_to_db('Date Extraction (Video)', dates)
 
     elif task_type == 'Brand Detection' and 'video_path' in locals():
-        model = load_yolo_model('/content/model.pt')
+        model = load_yolo_model('Brand_Identifier/model.pt')
         brands, annotated_video_path = detect_brands_from_video(video_path, model)
         st.subheader("Detected Brands from Video:")
         st.write(', '.join(brands) if brands else "No brands detected in video.")
