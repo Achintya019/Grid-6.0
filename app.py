@@ -2,7 +2,14 @@ import streamlit as st
 import tensorflow as tf
 import numpy as np
 from PIL import Image
-import easyocr
+import os
+import subprocess
+try:
+    import easyocr
+except ImportError:
+    subprocess.run(["pip", "install", "easyocr"], check=True)
+    import easyocr
+  
 import cv2
 from ultralytics import YOLO
 import re
