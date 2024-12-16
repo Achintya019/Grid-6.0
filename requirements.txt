@@ -2,4 +2,5 @@ tensorflow
 streamlit
 numpy
 pillow
+ultralytics
 opencv-python-headless
