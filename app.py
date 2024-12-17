@@ -7,12 +7,14 @@ import cv2
 from ultralytics import YOLO
 import re
 from datetime import datetime
-import tempfile
 import sqlite3
+import tempfile
+import pandas as pd
 
 # Define class names for freshness detection
 class_names = ['Apple', 'Banana', 'BitterGourd', 'Capsicum', 'Cucumber', 'Okra', 'Orange', 'Potato', 'Tomato',
-               'Rotten Apple', 'Rotten Banana', 'Rotten BitterGourd', 'Rotten Capsicum', 'Rotten Cucumber', 'Rotten Okra', 'Rotten Orange', 'Rotten Potato', 'Rotten Tomato']
+               'Rotten Apple', 'Rotten Banana', 'Rotten BitterGourd', 'Rotten Capsicum', 'Rotten Cucumber',
+               'Rotten Okra', 'Rotten Orange', 'Rotten Potato', 'Rotten Tomato']
 
 # Custom CSS for styling
 def apply_custom_css():
@@ -87,10 +89,7 @@ def init_db():
 def save_to_db(task_type, result, confidence=None):
     conn = sqlite3.connect('results.db')
     c = conn.cursor()
-    c.execute('''
-        INSERT INTO results (task_type, result, confidence)
-        VALUES (?, ?, ?)
-    ''', (task_type, result, confidence))
+    c.execute('INSERT INTO results (task_type, result, confidence) VALUES (?, ?, ?)', (task_type, result, confidence))
     conn.commit()
     conn.close()
 
@@ -104,29 +103,31 @@ def view_db():
     return data
 
 # Delete database entries
-def delete_db_entry(entry_id):
+def delete_db_entry(entry_id=None):
     conn = sqlite3.connect('results.db')
     c = conn.cursor()
-    c.execute('DELETE FROM results WHERE id = ?', (entry_id,))
+    if entry_id:
+        c.execute('DELETE FROM results WHERE id = ?', (entry_id,))
+    else:
+        c.execute('DELETE FROM results')
     conn.commit()
     conn.close()
 
-# Load the TensorFlow model for freshness detection
+# Load TensorFlow model
 @st.cache_resource
 def load_freshness_model():
-    return tf.keras.models.load_model('Freshness_Predicter/fruit_veg_classifier_custom.keras')
+    return tf.keras.models.load_model('/content/fruit_veg_classifier_custom.keras')
 
-# Load the YOLO model for date extraction
+# Load YOLO model
 @st.cache_resource
 def load_yolo_model(model_path):
     return YOLO(model_path)
 
-# Freshness detection prediction function
+# Prediction and processing functions
 def predict_freshness(image_path, model):
     img = tf.keras.preprocessing.image.load_img(image_path, target_size=(150, 150))
     img_array = tf.keras.preprocessing.image.img_to_array(img)
-    img_array = tf.expand_dims(img_array, axis=0)
-    img_array /= 255.0
+    img_array = tf.expand_dims(img_array, axis=0) / 255.0
 
     prediction = model.predict(img_array)
     predicted_class_index = np.argmax(prediction, axis=1)[0]
@@ -134,20 +135,17 @@ def predict_freshness(image_path, model):
 
     predicted_class_name = class_names[predicted_class_index]
     state = 'Fresh' if predicted_class_index < 9 else 'Rotten'
-    freshness_index = (50 + (confidence_score * 50)) if state == 'Fresh' else (1 - confidence_score) * 50
+    freshness_index = confidence_score * 100 if state == 'Fresh' else (1 - confidence_score) * 100
 
     return predicted_class_name, state, freshness_index
 
-# Date extraction utility functions
 def find_all_dates(text):
     date_patterns = [
-        r'\b\d{2}[/-]\d{2}[/-]\d{4}\b',
-        r'\b\d{4}[/-]\d{2}[/-]\d{2}\b',
+        r'\b\d{2}[/-]\d{2}[/-]\d{4}\b', r'\b\d{4}[/-]\d{2}[/-]\d{2}\b',
         r'\b\d{1,2}[ ](?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*[ ]\d{4}\b',
         r'\b(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*[ ]\d{1,2},[ ]\d{4}\b',
     ]
-    regex = '|'.join(date_patterns)
-    matches = re.findall(regex, text)
+    matches = re.findall('|'.join(date_patterns), text)
     return matches
 
 def extract_dates(image_path, model):
@@ -167,7 +165,6 @@ def extract_dates(image_path, model):
 
     return ', '.join(date_strings)
 
-# Brand detection function
 def detect_brands(image_path, model):
     frame = cv2.imread(image_path)
     results = model(frame)
@@ -178,7 +175,6 @@ def detect_brands(image_path, model):
     for result in results:
         for box in result.boxes:
             x1, y1, x2, y2 = map(int, box.xyxy[0])
-            cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
             cropped_image = frame[y1:y2, x1:x2]
             text_results = reader.readtext(cropped_image)
             for _, text, _ in text_results:
@@ -188,7 +184,6 @@ def detect_brands(image_path, model):
     cv2.imwrite(annotated_image_path, frame)
     return detected_brands, annotated_image_path
 
-# Video processing functions
 def extract_dates_from_video(video_path, model):
     cap = cv2.VideoCapture(video_path)
     reader = easyocr.Reader(['en'])
@@ -244,9 +239,8 @@ st.title('🛠️ Multi-Function Tool: Freshness Detector, Date Extractor & Bran
 
 # Task selection
 task_type = st.selectbox('Select a task:', ['Freshness Detection', 'Date Extraction', 'Brand Detection'])
-
-# Input method selection
 task = st.selectbox('Choose an input type:', ['Upload Image', 'Capture Image', 'Upload Video'])
+
 
 if task == 'Upload Image':
     uploaded_file = st.file_uploader("📁 Upload an image", type=["jpg", "jpeg", "png"])
@@ -287,14 +281,14 @@ if st.button('Process'):
         save_to_db('Freshness Detection', f"{predicted_class_name} ({state})", freshness_index)
 
     elif task_type == 'Date Extraction' and 'image_path' in locals():
-        model = load_yolo_model('Expiry_Date_Identifier/exp_date.pt')
+        model = load_yolo_model('/content/exp_date.pt')
         dates = extract_dates(image_path, model)
         st.subheader("Extracted Dates:")
         st.write(dates if dates else "No dates detected.")
         save_to_db('Date Extraction', dates)
 
     elif task_type == 'Brand Detection' and 'image_path' in locals():
-        model = load_yolo_model('Brand_Identifier/model.pt')
+        model = load_yolo_model('/content/model.pt')
         brands, annotated_image_path = detect_brands(image_path, model)
         st.subheader("Detected Brands:")
         st.write(', '.join(brands) if brands else "No brands detected.")
@@ -302,14 +296,14 @@ if st.button('Process'):
         save_to_db('Brand Detection', ', '.join(brands))
 
     elif task_type == 'Date Extraction' and 'video_path' in locals():
-        model = load_yolo_model('Expiry_Date_Identifier/exp_date.pt')
+        model = load_yolo_model('/content/exp_date.pt')
         dates = extract_dates_from_video(video_path, model)
         st.subheader("Extracted Dates from Video:")
         st.write(dates if dates else "No dates detected in video.")
         save_to_db('Date Extraction (Video)', dates)
 
     elif task_type == 'Brand Detection' and 'video_path' in locals():
-        model = load_yolo_model('Brand_Identifier/model.pt')
+        model = load_yolo_model('/content/model.pt')
         brands, annotated_video_path = detect_brands_from_video(video_path, model)
         st.subheader("Detected Brands from Video:")
         st.write(', '.join(brands) if brands else "No brands detected in video.")
@@ -322,12 +316,26 @@ if st.button('Process'):
 # View and manage database entries
 if st.checkbox('View Database Entries'):
     data = view_db()
-    st.subheader("Database Entries")
     if data:
-        for entry in data:
-            st.write(f"ID: {entry[0]}, Task: {entry[1]}, Result: {entry[2]}, Confidence: {entry[3]}, Timestamp: {entry[4]}")
-            if st.button(f"Delete Entry {entry[0]}"):
-                delete_db_entry(entry[0])
-                st.success(f"Deleted entry ID {entry[0]}.")
+        st.subheader("Database Entries")
+        # Convert the data to a pandas DataFrame
+        df = pd.DataFrame(data, columns=['ID', 'Task', 'Result', 'Confidence', 'Timestamp'])
+        st.dataframe(df, hide_index=True)  # Display the table
+
+        # Delete all entries button
+        if st.button('Delete All Entries'):
+            conn = sqlite3.connect('results.db')
+            c = conn.cursor()
+            c.execute('DELETE FROM results')  # Deletes all rows
+            conn.commit()
+            conn.close()
+            st.success("All entries deleted.")
+        
+        # Delete individual entries
+        st.subheader("Delete Individual Entries")
+        entry_id_to_delete = st.selectbox('Select an entry ID to delete:', df['ID'].tolist())
+        if st.button('Delete Selected Entry'):
+            delete_db_entry(entry_id_to_delete)
+            st.success(f"Deleted entry ID {entry_id_to_delete}.")
     else:
         st.write("No entries found.")
