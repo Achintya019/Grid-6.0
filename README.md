@@ -15,7 +15,8 @@
 
 
 ## Database Entries 
-![image](https://github.com/user-attachments/assets/61a5bc2b-a1a3-4a3d-854f-f5dfba3bb830)
+![image](https://github.com/user-attachments/assets/ef0636a0-4330-4669-9ac1-5447518ce0e6)
+
 
 ### Schema
             CREATE TABLE IF NOT EXISTS results 
